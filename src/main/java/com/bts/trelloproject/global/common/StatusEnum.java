@@ -35,6 +35,13 @@ public enum StatusEnum {
     FAIL_SEND_EMAIL(HttpStatus.BAD_REQUEST, "FAIL_SEND_EMAIL", "인증 코드 메일이 전송 실패 했습니다."),
     FAIL_EMAIL_CONFIRM(HttpStatus.UNAUTHORIZED, "FAIL_EMAIL_CONFIRM", "이메일 인증을 하지 않았습니다."),
     SENDER_UNMATCHED(HttpStatus.BAD_REQUEST, "SENDER_UNMATCHED", "보내는 사람이 잘못 설정 되었습니다."),
+
+    // COLUMN
+    SUCCESS_CREATE_COLUMN(HttpStatus.CREATED, "SUCCESS_CREATE_COLUMN", "컬럼을 작성하였습니다."),
+    COLUMN_NOT_FOUND(HttpStatus.NOT_FOUND, "COLUMN_NOT_FOUND", "컬림이 존재하지 않습니다."),
+    SUCCESS_UPDATE_COLUMN(HttpStatus.CREATED, "SUCCESS_UPDATE_COLUMN", "컬럼을 수정하였습니다."),
+    SUCCESS_DELETE_COLUMN(HttpStatus.OK, "SUCCESS_DELETE_COLUMN", "컬럼이 삭제되었습니다."),
+    COLUMN_NOT_MATCHED(HttpStatus.UNAUTHORIZED, "COLUMN_NOT_MATCHED", "컬럼을 작성한 사용자가 아닙니다."),
     ;
 
 
