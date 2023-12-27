@@ -21,6 +21,7 @@ public class ColumnsConroller {
     @PostMapping("/columns") // 컬럼 생성
     public ResponseEntity<CustomResponseEntity> createColumn(@RequestBody ColumnsRequestDto columnsRequestDto) {
         columnsService.createColumns(columnsRequestDto);
+
         return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_CREATE_COLUMN);
     }
 
