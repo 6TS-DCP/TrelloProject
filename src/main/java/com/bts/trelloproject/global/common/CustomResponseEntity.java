@@ -2,6 +2,7 @@ package com.bts.trelloproject.global.common;
 
 import lombok.Builder;
 import lombok.Data;
+import com.bts.trelloproject.global.security.jwt.JwtUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -33,16 +34,16 @@ public class CustomResponseEntity {
                         .build());
     }
 
-//    public static ResponseEntity<CustomResponseEntity> toResponseEntityWithHeader(StatusEnum e, String token){
-//        return ResponseEntity
-//                .status(e.getHttpStatus())
-//                .header(JwtUtil.AUTHORIZATION_HEADER, token)
-//                .body(CustomResponseEntity.builder()
-//                        .status(e.getHttpStatus().value())
-//                        .description(e.name())
-//                        .message(e.getMessage())
-//                        .build());
-//    }
+    public static ResponseEntity<CustomResponseEntity> toResponseEntityWithHeader(StatusEnum e, String token){
+        return ResponseEntity
+                .status(e.getHttpStatus())
+                .header(JwtUtil.AUTHORIZATION_HEADER, token)
+                .body(CustomResponseEntity.builder()
+                        .status(e.getHttpStatus().value())
+                        .description(e.name())
+                        .message(e.getMessage())
+                        .build());
+    }
 
     public static CustomResponseEntity toCustomResponseEntity(StatusEnum e){
         return CustomResponseEntity.builder()

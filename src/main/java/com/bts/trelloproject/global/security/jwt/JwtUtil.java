@@ -24,6 +24,10 @@ import org.springframework.util.StringUtils;
 @Component
 public class JwtUtil {
 
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+
+    public static final String AUTHORIZATION_KEY = "auth";
+
     public static final String BEARER_PREFIX = "Bearer ";
     //테스트용 4시간
     private final long TOKEN_TIME = 240 * 60 * 1000L;
