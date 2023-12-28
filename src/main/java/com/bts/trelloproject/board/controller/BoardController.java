@@ -37,6 +37,7 @@ public class BoardController {
     public BoardResponseDto getboard(@PathVariable Long boardId) {
         BoardResponseDto boardResponseDto = boardService.getBoard(boardId);
         return boardResponseDto;
+
     }
 
     //보드 전체 조회
