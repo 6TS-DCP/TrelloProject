@@ -21,7 +21,3 @@ public class UserDetailsService {
         return new UserDetailsImpl(user);
     }
 }
-
-//        throw new CustomException(StatusEnum.USER_NOT_FOUND)
-// .orElseThrow(() -> new UsernameNotFoundException("Not Found " + username));
-

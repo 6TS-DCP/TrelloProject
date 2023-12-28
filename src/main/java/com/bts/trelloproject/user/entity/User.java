@@ -36,5 +36,13 @@ public class User extends BaseLastModifiedTimeEntity {
     private String Introduce;
 
     @Column(nullable = false)
-    private UserRoleEnum userRole;
+    private UserRoleEnum role;
+
+    public void updateProfile(String Introduce) {
+        this.Introduce = Introduce;
+    }
+
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
+    }
 }
