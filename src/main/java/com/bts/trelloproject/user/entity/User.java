@@ -1,9 +1,12 @@
 package com.bts.trelloproject.user.entity;
 
 import com.bts.trelloproject.global.common.BaseLastModifiedTimeEntity;
+import com.bts.trelloproject.user.constant.Provider;
 import com.bts.trelloproject.user.constant.UserRoleEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,10 +35,21 @@ public class User extends BaseLastModifiedTimeEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = true, length = 10)
     private String Introduce;
 
+    @Column(nullable = true)
+    private String email;
+
+    @Column(nullable = true)
+    private String profileImageUrl;
+
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserRoleEnum role;
 
     public void updateProfile(String Introduce) {
