@@ -43,7 +43,7 @@ public class UserService {
         User user = signRequestDTO.toEntity(passwordEncoder);
 
         userRepository.save(user);
-        //savePasswordHistory(user.getUserId(), user.getPassword());
+        savePasswordHistory(user.getUserId(), user.getPassword());
     }
 
     private void validateExistingUser(String userName) {

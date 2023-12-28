@@ -37,6 +37,7 @@ public enum StatusEnum {
     SUCCESS_USER_UPDATE(HttpStatus.OK, "SUCCESS_USER_UPDATE", "개인 회원 정보 수정에 성공하였습니다."),
     SUCCESS_CHANGE_PASSWORD(HttpStatus.OK, "SUCCESS_CHANGE_PASSWORD", "비밀번호가 변경되었습니다"),
     DUPLICATE_PASSWORD_EXCEPTION(HttpStatus.BAD_REQUEST, "DUPLICATE_PASSWORD_EXCEPTION","최근 3번이내의 비밀번호로 변경할 수 없습니다."),
+    INVALID_OAUTH_PROVIDER(HttpStatus.BAD_REQUEST, "INVALID_OAUTH_PROVIDER", "올바르지 않은 로그인 접근입니다."),
 
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "POST_NOT_FOUND", "게시글이 존재하지 않습니다."),
     COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "COMMENT_NOT_FOUND", "댓글이 존재하지 않습니다."),
