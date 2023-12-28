@@ -22,25 +22,44 @@ repositories {
 }
 
 dependencies {
+
+    // jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    //security
+    // security
     implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
     // JWT
     compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
-    // json
-    implementation 'org.json:json:20230227'
+    // JWT test
+    testCompileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+    testRuntimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+    testRuntimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
+    // oauth2
+    implementation group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '6.2.1'
+
+    // json
+    implementation 'org.json:json:20231013'
+
+    // mysql
     runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // h2
     runtimeOnly 'com.h2database:h2'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+
+    // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
