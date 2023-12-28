@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ColumnsResponseDto {
     private Long id;
-    private String column_name;
+    private String columnName;
+    private int columnSeq;
 
     public ColumnsResponseDto(Columns columns) {
         this.id = columns.getId();
-        this.column_name = columns.getColumn_name();
+        this.columnName = columns.getColumnName();
+        this.columnSeq = columns.getColumnSeq();
     }
 }

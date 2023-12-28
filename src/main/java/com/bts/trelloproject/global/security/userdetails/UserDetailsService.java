@@ -15,8 +15,7 @@ public class UserDetailsService {
 
     public UserDetailsImpl getUserDetails(String username) {
 
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new CustomException(StatusEnum.USER_NOT_FOUND));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new CustomException(StatusEnum.USER_NOT_FOUND));
 
         return new UserDetailsImpl(user);
     }

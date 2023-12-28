@@ -67,6 +67,7 @@ public enum StatusEnum {
     COLUMN_NOT_MATCHED(HttpStatus.UNAUTHORIZED, "COLUMN_NOT_MATCHED", "컬럼을 작성한 사용자가 아닙니다."),
     DUPLICATED_COLUMN_SEQ(HttpStatus.CONFLICT, "DUPLICATED_COLUMN_SEQ", "중복된 컬럼순서가 존재합니다."),
     SUCCESS_CHANGE_COLUMN(HttpStatus.CREATED, "SUCCESS_CHANGE_COLUMN", "컬럼 순서를 변경하였습니다."),
+    UsernameNotFoundException(HttpStatus.BAD_REQUEST, "USER_NOT_FOUND", "등록된 아이디가 존재하지 않습니다."),
     ;
 
 

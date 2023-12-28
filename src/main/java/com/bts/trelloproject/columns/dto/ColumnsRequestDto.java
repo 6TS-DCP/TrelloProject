@@ -9,8 +9,10 @@ import lombok.RequiredArgsConstructor;
 public class ColumnsRequestDto {
 
     private String column_name;
+    private int column_seq;
 
-    public ColumnsRequestDto(String column_name) {
+    public ColumnsRequestDto(String column_name, int column_seq) {
         this.column_name = column_name;
+        this.column_seq = column_seq;
     }
 }
