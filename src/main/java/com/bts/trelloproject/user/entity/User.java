@@ -41,4 +41,8 @@ public class User extends BaseLastModifiedTimeEntity {
     public void updateProfile(String Introduce) {
         this.Introduce = Introduce;
     }
+
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
+    }
 }

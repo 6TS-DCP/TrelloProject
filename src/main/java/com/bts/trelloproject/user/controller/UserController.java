@@ -3,6 +3,7 @@ package com.bts.trelloproject.user.controller;
 import com.bts.trelloproject.global.common.CustomResponseEntity;
 import com.bts.trelloproject.global.common.StatusEnum;
 import com.bts.trelloproject.global.security.userdetails.UserDetailsImpl;
+import com.bts.trelloproject.user.dto.ChangePasswordDTO;
 import com.bts.trelloproject.user.dto.LoginDTO;
 import com.bts.trelloproject.user.dto.SignupDTO;
 import com.bts.trelloproject.user.dto.UpdateProfileDTO;
@@ -50,12 +51,22 @@ public class UserController {
         return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_LOGOUT);
     }
 
-    @PatchMapping("/update")
-    public ResponseEntity<CustomResponseEntity> updateProfile(@Valid @RequestBody UpdateProfileDTO.Request updateProfileRequestDTO,
+    @PatchMapping("/profile")
+    public ResponseEntity<CustomResponseEntity> updateProfile(@Valid @RequestBody UpdateProfileDTO updateProfileDTO,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
-        userService.updateProfile(updateProfileRequestDTO, userDetails);
+        userService.updateProfile(updateProfileDTO, userDetails);
+
+        return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_USER_UPDATE);
+    }
+
+    @PatchMapping("/password")
+    public ResponseEntity<CustomResponseEntity> changePassword(@Valid @RequestBody ChangePasswordDTO changePasswordDTO,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        userService.changePassword(changePasswordDTO, userDetails.getUser().getUserId());
 
         return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_USER_UPDATE);
     }
 }
+
