@@ -51,5 +51,6 @@ public class CustomResponseEntity {
                 .message(e.getMessage())
                 .build();
     }
+
 }
 
