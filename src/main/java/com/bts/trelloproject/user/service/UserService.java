@@ -3,14 +3,17 @@ package com.bts.trelloproject.user.service;
 import com.bts.trelloproject.global.common.StatusEnum;
 import com.bts.trelloproject.global.exception.CustomException;
 import com.bts.trelloproject.global.security.jwt.JwtUtil;
+import com.bts.trelloproject.global.security.userdetails.UserDetailsImpl;
 import com.bts.trelloproject.user.dto.LoginDTO;
 import com.bts.trelloproject.user.dto.SignupDTO;
+import com.bts.trelloproject.user.dto.UpdateProfileDTO.Request;
 import com.bts.trelloproject.user.entity.User;
 import com.bts.trelloproject.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -61,6 +64,21 @@ public class UserService {
     public void logout(HttpServletResponse response) {
 
         response.setHeader("Authorization", jwtUtil.createToken(null, false));
+    }
+
+    @Transactional
+    public void updateProfile(Request updateProfileRequestDTO, UserDetailsImpl userDetails) {
+
+        User user = userRepository.findById(userDetails.getUser().getUserId())
+                .orElseThrow(() -> new CustomException(StatusEnum.USER_NOT_FOUND));
+
+        if (!passwordEncoder.matches(updateProfileRequestDTO.password(), user.getPassword())) {
+            throw new CustomException(StatusEnum.WRONG_PASSWORD_EXCEPTION);
+        }
+
+        String introduce = updateProfileRequestDTO.introduce();
+
+        user.updateProfile(introduce);
     }
 
 //    private void savePasswordHistory(Long userId, String password) {

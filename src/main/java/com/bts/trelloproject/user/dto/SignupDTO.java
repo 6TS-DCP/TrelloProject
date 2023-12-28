@@ -16,7 +16,7 @@ public record SignupDTO(
                 .username(username)
                 .password(passwordEncoder.encode(password))
                 .Introduce(BASIC_PROFILE_INTRODUCTION)
-                .userRole(UserRoleEnum.USER)
+                .role(UserRoleEnum.USER)
                 .build();
     }
 }
