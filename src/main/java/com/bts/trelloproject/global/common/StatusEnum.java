@@ -38,6 +38,13 @@ public enum StatusEnum {
     SUCCESS_CHANGE_PASSWORD(HttpStatus.OK, "SUCCESS_CHANGE_PASSWORD", "비밀번호가 변경되었습니다"),
     DUPLICATE_PASSWORD_EXCEPTION(HttpStatus.BAD_REQUEST, "DUPLICATE_PASSWORD_EXCEPTION","최근 3번이내의 비밀번호로 변경할 수 없습니다."),
 
+    //보드
+    SUCCESS_CREATE_BOARD(HttpStatus.CREATED, "SUCCESS_CREATE_BOARD", "보드를 작성하였습니다."),
+    SUCCESS_UPDATE_BOARD(HttpStatus.CREATED, "SUCCESS_UPDATE_BOARD", "보드를 수정하였습니다."),
+    SUCCESS_DELETE_BOARD(HttpStatus.OK, "SUCCESS_DELETE_BOARD", "보드가 삭제되었습니다."),
+    BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, "BOARD_NOT_FOUND", "보드가 존재하지 않습니다."),
+    BOARD_NOT_MATCHED(HttpStatus.UNAUTHORIZED, "BOARD_NOT_MATCHED", "보드를 작성한 사용자가 아닙니다."),
+
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "POST_NOT_FOUND", "게시글이 존재하지 않습니다."),
     COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "COMMENT_NOT_FOUND", "댓글이 존재하지 않습니다."),
     COMMENT_NOT_MATCHED(HttpStatus.UNAUTHORIZED, "COMMENT_NOT_MATCHED", "댓글을 작성한 사용자가 아닙니다."),
@@ -57,6 +64,8 @@ public enum StatusEnum {
     SUCCESS_UPDATE_COLUMN(HttpStatus.CREATED, "SUCCESS_UPDATE_COLUMN", "컬럼을 수정하였습니다."),
     SUCCESS_DELETE_COLUMN(HttpStatus.OK, "SUCCESS_DELETE_COLUMN", "컬럼이 삭제되었습니다."),
     COLUMN_NOT_MATCHED(HttpStatus.UNAUTHORIZED, "COLUMN_NOT_MATCHED", "컬럼을 작성한 사용자가 아닙니다."),
+    DUPLICATED_COLUMN_SEQ(HttpStatus.CONFLICT, "DUPLICATED_COLUMN_SEQ", "중복된 컬럼순서가 존재합니다."),
+    SUCCESS_CHANGE_COLUMN(HttpStatus.CREATED, "SUCCESS_CHANGE_COLUMN", "컬럼 순서를 변경하였습니다."),
     ;
 
 

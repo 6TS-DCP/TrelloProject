@@ -1,6 +1,7 @@
 package com.bts.trelloproject.columns.entity;
 
 
+import com.bts.trelloproject.board.entity.Boards;
 import com.bts.trelloproject.columns.dto.ColumnsRequestDto;
 import com.bts.trelloproject.global.common.BaseLastModifiedTimeEntity;
 import jakarta.persistence.*;
@@ -21,6 +22,9 @@ public class Columns extends BaseLastModifiedTimeEntity {
     @Column(nullable = false)
     private String column_name;
 
+    @ManyToOne
+    @JoinColumn(name = "board_id")
+    private Boards boards;
     public Columns(ColumnsRequestDto columnRequestDto) {
         this.column_name = columnRequestDto.getColumn_name();
     }
