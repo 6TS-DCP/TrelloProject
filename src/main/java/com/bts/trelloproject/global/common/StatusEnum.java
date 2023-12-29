@@ -55,21 +55,31 @@ public enum StatusEnum {
     SUCCESS_DELETE_POST(HttpStatus.OK, "SUCCESS_DELETE_POST", "공고가 삭제되었습니다."),
     SUCCESS_LIKE(HttpStatus.CREATED, "SUCCESS_LIKE", "좋아요가 추가되었습니다."),
     SUCCESS_LIKE_DELETE(HttpStatus.OK, "SUCCESS_LIKE_DELETE", "좋아요가 삭제되었습니다."),
-    SUCCESS_COMMENT_CREATE(HttpStatus.OK, "SUCCESS_COMMENT_CREATE", "댓글이 등록되었습니다."),
-    SUCCESS_COMMENT_UPDATE(HttpStatus.OK, "SUCCESS_COMMENT_UPDATE", "댓글이 수정되었습니다."),
-    SUCCESS_COMMENT_DELETE(HttpStatus.OK, "SUCCESS_DELETE_POST", "댓글이 삭제되었습니다."),
 
     // COLUMN
     SUCCESS_CREATE_COLUMN(HttpStatus.CREATED, "SUCCESS_CREATE_COLUMN", "컬럼을 작성하였습니다."),
-    COLUMN_NOT_FOUND(HttpStatus.NOT_FOUND, "COLUMN_NOT_FOUND", "컬림이 존재하지 않습니다."),
+    COLUMN_NOT_FOUND(HttpStatus.NOT_FOUND, "COLUMN_NOT_FOUND", "컬럼이 존재하지 않습니다."),
     SUCCESS_UPDATE_COLUMN(HttpStatus.CREATED, "SUCCESS_UPDATE_COLUMN", "컬럼을 수정하였습니다."),
     SUCCESS_DELETE_COLUMN(HttpStatus.OK, "SUCCESS_DELETE_COLUMN", "컬럼이 삭제되었습니다."),
     COLUMN_NOT_MATCHED(HttpStatus.UNAUTHORIZED, "COLUMN_NOT_MATCHED", "컬럼을 작성한 사용자가 아닙니다."),
     DUPLICATED_COLUMN_SEQ(HttpStatus.CONFLICT, "DUPLICATED_COLUMN_SEQ", "중복된 컬럼순서가 존재합니다."),
     SUCCESS_CHANGE_COLUMN(HttpStatus.CREATED, "SUCCESS_CHANGE_COLUMN", "컬럼 순서를 변경하였습니다."),
     UsernameNotFoundException(HttpStatus.BAD_REQUEST, "USER_NOT_FOUND", "등록된 아이디가 존재하지 않습니다."),
-    ;
 
+    // CARD
+    SUCCESS_CREATE_CARD(HttpStatus.CREATED, "SUCCESS_CREATE_CARD", "카드를 작성하였습니다."),
+    DUPLICATED_CARD_SEQ(HttpStatus.CONFLICT, "DUPLICATED_CARD_SEQ", "중복된 카드순서가 존재합니다."),
+    CARD_NOT_FOUND(HttpStatus.NOT_FOUND, "CARD_NOT_FOUND", "카드가 존재하지 않습니다."),
+    SUCCESS_UPDATE_CARD(HttpStatus.CREATED, "SUCCESS_UPDATE_CARD", "카드가 수정되었습니다."),
+    SUCCESS_DELETE_CARD(HttpStatus.OK, "SUCCESS_DELETE_CARD", "카드가 삭제되었습니다."),
+    SUCCESS_CHANGE_CARD(HttpStatus.CREATED, "SUCCESS_CHANGE_CARD", "카드 순서를 변경하였습니다."),
+    CARD_NOT_MATCHED(HttpStatus.UNAUTHORIZED, "CARD_NOT_MATCHED", "카드를 작성한 사용자가 아닙니다."),
+
+    // COMMENT
+    SUCCESS_COMMENT_CREATE(HttpStatus.OK, "SUCCESS_COMMENT_CREATE", "댓글이 등록되었습니다."),
+    SUCCESS_COMMENT_UPDATE(HttpStatus.OK, "SUCCESS_COMMENT_UPDATE", "댓글이 수정되었습니다."),
+    SUCCESS_COMMENT_DELETE(HttpStatus.OK, "SUCCESS_DELETE_POST", "댓글이 삭제되었습니다."),
+    ;
 
     private final HttpStatus httpStatus;
     private final String description;
