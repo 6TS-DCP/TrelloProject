@@ -3,6 +3,7 @@ package com.bts.trelloproject.card.entity;
 import com.bts.trelloproject.card.dto.CardRequestDto;
 import com.bts.trelloproject.card.dto.CardUpdateRequestDto;
 import com.bts.trelloproject.columns.entity.Columns;
+import com.bts.trelloproject.comment.entity.Comment;
 import com.bts.trelloproject.global.common.BaseLastModifiedTimeEntity;
 import com.bts.trelloproject.user.entity.User;
 import jakarta.persistence.Column;
@@ -13,6 +14,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,6 +47,9 @@ public class Card extends BaseLastModifiedTimeEntity {
     @Column(nullable = false)
     private int cardSeq;
 
+    @Column(nullable = false)
+    private int deadLine;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -50,6 +57,9 @@ public class Card extends BaseLastModifiedTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "column_id", nullable = false)
     private Columns columns;
+
+    @OneToMany(mappedBy = "card", orphanRemoval = true)
+    private List<Comment> commentList = new ArrayList<>();
 
     public Card(CardRequestDto cardRequestDto, User user, Columns columns) {
         this.cardName = cardRequestDto.getCardName();
@@ -59,6 +69,7 @@ public class Card extends BaseLastModifiedTimeEntity {
         this.cardSeq = cardRequestDto.getCardSeq();
         this.user = user;
         this.columns = columns;
+        this.deadLine = 90;
     }
 
     public void update(CardUpdateRequestDto cardUpdateRequestDto) {
@@ -70,5 +81,9 @@ public class Card extends BaseLastModifiedTimeEntity {
 
     public void updateSeq(int seq) {
         this.cardSeq = seq;
+    }
+
+    public void updateDeadLine(int dead) {
+        this.deadLine = dead;
     }
 }

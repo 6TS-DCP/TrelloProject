@@ -4,22 +4,27 @@ import com.bts.trelloproject.board.dto.BoardRequestDto;
 import com.bts.trelloproject.columns.entity.Columns;
 import com.bts.trelloproject.global.common.BaseCreatedTimeEntity;
 import com.bts.trelloproject.user.entity.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @Table(name = "boards")
 public class Boards extends BaseCreatedTimeEntity {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,28 +40,21 @@ public class Boards extends BaseCreatedTimeEntity {
     private String color;
 
     @ManyToOne
-    @JoinColumn (name = "user_name")
+    @JoinColumn(name = "user_name")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private User user;
 
- /*  @OneToMany (mappedBy = "boards", orphanRemoval = true)
-    private List<Columns> columnsList = new ArrayList<>();*/
-
-    @OneToMany(mappedBy = "boards")
-    @JsonIgnore
+    @OneToMany(mappedBy = "boards", orphanRemoval = true)
     private List<Columns> columnsList = new ArrayList<>();
 
-//    @OneToMany (mappedBy = "boards", orphanRemoval = true)
-//    private List<Cards> cardsList = new ArrayList<>();
-
-    public Boards(BoardRequestDto dto, User user){
+    public Boards(BoardRequestDto dto, User user) {
         this.user = user;
         this.title = dto.getTitle();
         this.content = dto.getContent();
         this.color = dto.getColor();
     }
 
-    public void updateboard(BoardRequestDto dto){
+    public void updateBoard(BoardRequestDto dto) {
         this.title = dto.getTitle();
         this.content = dto.getContent();
         this.color = dto.getColor();

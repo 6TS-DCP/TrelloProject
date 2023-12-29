@@ -1,5 +1,7 @@
 package com.bts.trelloproject.columns.service;
 
+import com.bts.trelloproject.board.entity.Boards;
+import com.bts.trelloproject.board.service.BoardService;
 import com.bts.trelloproject.columns.dto.ColumnsRequestDto;
 import com.bts.trelloproject.columns.dto.ColumnsResponseDto;
 import com.bts.trelloproject.columns.dto.ColumnsSeqRequestDto;
@@ -8,53 +10,53 @@ import com.bts.trelloproject.columns.repository.ColumnsRepository;
 import com.bts.trelloproject.global.common.StatusEnum;
 import com.bts.trelloproject.global.exception.CustomException;
 import com.bts.trelloproject.user.entity.User;
-import com.bts.trelloproject.user.repository.UserRepository;
+import com.bts.trelloproject.user.service.UserService;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ColumnsService {
     private final ColumnsRepository columnsRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
+    private final BoardService boardService;
 
-    public void createColumns(ColumnsRequestDto columnsRequestDto, User user) {
+    public void createColumns(Long boardId, ColumnsRequestDto columnsRequestDto, User user) {
+
         checkSeq(columnsRequestDto.getColumn_seq(), user);
-        Columns columns = new Columns(columnsRequestDto, user);
+        Boards boards = boardService.findById(boardId);
+        Columns columns = new Columns(boards, columnsRequestDto, user);
         columnsRepository.save(columns);
     }
 
+    public List<ColumnsResponseDto> getMyColumns(Long boardId, User user) {
 
+        User dbuser = userService.findById(user.getUserId());
 
-    public List<ColumnsResponseDto> myGetColumns(User user) {
-        User dbuser = userRepository.findById(user.getUserId()).orElseThrow(()
-                -> new CustomException(StatusEnum.UsernameNotFoundException));
-
-        return columnsRepository.findAllByUser(dbuser).stream().map(ColumnsResponseDto::new).toList();
+        Boards boards = boardService.findById(boardId);
+        return columnsRepository.findAllByUserAndBoards(dbuser,boards).stream().map(ColumnsResponseDto::new).toList();
     }
 
-    public ColumnsResponseDto myGetColumn(Long id, User user) {
-        userRepository.findById(user.getUserId()).orElseThrow(() ->
-                new CustomException(StatusEnum.UsernameNotFoundException));
+    public ColumnsResponseDto getMyColumn(Long boardId, Long columnId, User user) {
 
-        checkMyColumn(id, user);
+        userService.findById(user.getUserId());
+        Boards boards = boardService.findById(boardId);
 
-        Columns columns = columnsRepository.findById(id).orElseThrow(
-                () -> new CustomException(StatusEnum.COLUMN_NOT_FOUND));
+        checkMyColumn(columnId, user);
+
+        Columns columns = columnsRepository.findByIdAndBoards(columnId, boards);
 
         return new ColumnsResponseDto(columns);
     }
 
-
-
     @Transactional
-    public void updateColumn(Long id, ColumnsRequestDto columnsRequestDto, User user) {
-        Columns columns = columnsRepository.findById(id).orElseThrow(
-                () -> new CustomException(StatusEnum.COLUMN_NOT_FOUND));
+    public void updateColumn(Long boardId, Long columnId, ColumnsRequestDto columnsRequestDto, User user) {
+
+        Boards boards = boardService.findById(boardId);
+        Columns columns = columnsRepository.findByIdAndBoards(columnId, boards);
 
         if (!columns.getUser().getUsername().equals(user.getUsername())) {
             throw new CustomException(StatusEnum.COLUMN_NOT_MATCHED);
@@ -63,9 +65,10 @@ public class ColumnsService {
         columns.update(columnsRequestDto);
     }
 
-    public void removeColumn(Long id, User user) {
-        Columns columns = columnsRepository.findById(id).orElseThrow(
-                () -> new CustomException(StatusEnum.COLUMN_NOT_FOUND));
+    public void deleteColumn(Long boardId, Long columnId, User user) {
+
+        Boards boards = boardService.findById(boardId);
+        Columns columns = columnsRepository.findByIdAndBoards(columnId, boards);
 
         if (!columns.getUser().getUsername().equals(user.getUsername())) {
             throw new CustomException(StatusEnum.COLUMN_NOT_MATCHED);
@@ -73,11 +76,14 @@ public class ColumnsService {
 
         columnsRepository.delete(columns);
     }
+
     public List<ColumnsResponseDto> getColumns() {
+
         return columnsRepository.findAll().stream().map(ColumnsResponseDto::new).toList();
     }
 
     public ColumnsResponseDto getColumn(Long id) {
+
         Columns columns = columnsRepository.findById(id).orElseThrow(
                 () -> new CustomException(StatusEnum.POST_NOT_FOUND));
         return new ColumnsResponseDto(columns);
@@ -104,12 +110,14 @@ public class ColumnsService {
             return false;
         }
     }
+
     private void checkMyColumn(Long id, User user) {
         Optional<Columns> checkColumn = columnsRepository.findByIdAndUser(id, user);
-        if(checkColumn.isPresent()) {
+        if(checkColumn.isEmpty()) {
             throw new CustomException(StatusEnum.COLUMN_NOT_FOUND);
         }
     }
+
     public void checkSeq(int columnSeq, User user) {
         Optional<Columns> checkSeq = columnsRepository.findByColumnSeqAndUser(columnSeq, user);
         if(checkSeq.isPresent()) {

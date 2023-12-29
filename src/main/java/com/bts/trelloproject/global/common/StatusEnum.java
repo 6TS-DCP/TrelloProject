@@ -74,6 +74,7 @@ public enum StatusEnum {
     SUCCESS_DELETE_CARD(HttpStatus.OK, "SUCCESS_DELETE_CARD", "카드가 삭제되었습니다."),
     SUCCESS_CHANGE_CARD(HttpStatus.CREATED, "SUCCESS_CHANGE_CARD", "카드 순서를 변경하였습니다."),
     CARD_NOT_MATCHED(HttpStatus.UNAUTHORIZED, "CARD_NOT_MATCHED", "카드를 작성한 사용자가 아닙니다."),
+    SUCCESS_CHANGE_DEADLINE(HttpStatus.OK, "SUCCESS_CHANGE_DEADLINE", "카드 마감일을 변경하였습니다."),
 
     // COMMENT
     SUCCESS_COMMENT_CREATE(HttpStatus.OK, "SUCCESS_COMMENT_CREATE", "댓글이 등록되었습니다."),
