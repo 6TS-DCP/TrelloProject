@@ -2,6 +2,7 @@ package com.bts.trelloproject.card.Service;
 
 import com.bts.trelloproject.card.dto.CardRequestDto;
 import com.bts.trelloproject.card.dto.CardResponseDto;
+import com.bts.trelloproject.card.dto.CardSchedulerDto;
 import com.bts.trelloproject.card.dto.CardSeqRequestDto;
 import com.bts.trelloproject.card.dto.CardUpdateRequestDto;
 import com.bts.trelloproject.card.entity.Card;
@@ -92,7 +93,14 @@ public class CardService {
         card.update(cardRequestDto);
     }
 
-    //@Scheduled(cron = "10 * * * * *")
+    @Transactional
+    public void changeSchedule(Long cardId, CardSchedulerDto cardSchedulerDto, User user) {
+
+        Card card = cardRepository.findByIdAndUser(cardId, user);
+
+        card.updateDeadLine(cardSchedulerDto.getDate());
+    }
+
     @Scheduled(cron = "* * 0 * * *", zone = "Asia/Seoul")
     @Transactional
     public void deleteCardWithScheduler() {
@@ -102,7 +110,7 @@ public class CardService {
             LocalDateTime endDT = LocalDateTime.now();
 
             Period diff = Period.between(startDT.toLocalDate(), endDT.toLocalDate());
-            if(diff.getDays() > 90){
+            if(diff.getDays() > card.getDeadLine()){
                 cardRepository.delete(card);
             }
         }

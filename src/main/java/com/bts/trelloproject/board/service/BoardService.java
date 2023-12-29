@@ -4,18 +4,16 @@ import com.bts.trelloproject.board.dto.BoardRequestDto;
 import com.bts.trelloproject.board.dto.BoardResponseDto;
 import com.bts.trelloproject.board.entity.Boards;
 import com.bts.trelloproject.board.repository.BoardRepository;
-import com.bts.trelloproject.card.entity.Card;
 import com.bts.trelloproject.global.common.StatusEnum;
 import com.bts.trelloproject.global.exception.CustomException;
 import com.bts.trelloproject.user.entity.User;
 import com.bts.trelloproject.user.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -32,13 +30,11 @@ public class BoardService {
         return new BoardResponseDto(boards);
     }
 
-
     public BoardResponseDto getBoard(Long boardId) {
         Boards boards = boardRepository.findById(boardId).orElseThrow(
                 () -> new CustomException(StatusEnum.BOARD_NOT_FOUND));
         return new BoardResponseDto(boards);
     }
-
 
     public List<BoardResponseDto> getAllBoard() {
         List<BoardResponseDto> boardResponseDtoList = new ArrayList<>();
@@ -56,7 +52,7 @@ public class BoardService {
     @Transactional
     public BoardResponseDto updateBoard(Long boardId, BoardRequestDto dto, String username) {
         Boards boards = checkLoginUserAndBoardUser(boardId, username);
-        boards.updateboard(dto);
+        boards.updateBoard(dto);
 
         boardRepository.save(boards);
         return new BoardResponseDto(boards);
@@ -83,6 +79,7 @@ public class BoardService {
     }
 
     public Boards findById(Long boardId) {
+
         return boardRepository.findById(boardId).orElseThrow(() -> new CustomException(StatusEnum.BOARD_NOT_FOUND));
     }
 

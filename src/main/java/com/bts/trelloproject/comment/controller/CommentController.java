@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/boards/{boardId}/columns/{columnsId}/cards/{cardId}/comments")
+@RequestMapping("/api/cards/{cardId}/comments")
 @RequiredArgsConstructor
 public class CommentController {
 
@@ -23,13 +23,11 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<CustomResponseEntity> createComment(@AuthenticationPrincipal UserDetailsImpl userDetails,
-            @PathVariable Long columnsId,
             @PathVariable Long cardId,
-            @PathVariable Long boardId,
             @RequestBody CommentRequestDto commentRequestDto) {
 
         Long userId = userDetails.getUser().getUserId();
-        commentService.createComment(userId, boardId, columnsId, cardId, commentRequestDto.getCommentContent());
+        commentService.createComment(userId, cardId, commentRequestDto.getCommentContent());
         return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_COMMENT_CREATE);
     }
 }

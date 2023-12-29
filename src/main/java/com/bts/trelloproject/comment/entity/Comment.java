@@ -1,8 +1,6 @@
 package com.bts.trelloproject.comment.entity;
 
-import com.bts.trelloproject.board.entity.Boards;
 import com.bts.trelloproject.card.entity.Card;
-import com.bts.trelloproject.columns.entity.Columns;
 import com.bts.trelloproject.global.common.BaseLastModifiedTimeEntity;
 import com.bts.trelloproject.user.entity.User;
 import jakarta.persistence.Column;
@@ -32,14 +30,6 @@ public class Comment extends BaseLastModifiedTimeEntity {
     private String commentContent;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id", nullable = false)
-    private Boards boards;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "column_id", nullable = false)
-    private Columns columns;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id", nullable = false)
     private Card card;
 
@@ -48,10 +38,8 @@ public class Comment extends BaseLastModifiedTimeEntity {
     private User user;
 
 
-    public Comment(User findUser, Boards findBoard, Columns findColumns, Card findCard, String commentContent) {
+    public Comment(User findUser, Card findCard, String commentContent) {
         this.user = findUser;
-        this.boards = findBoard;
-        this.columns = findColumns;
         this.card = findCard;
         this.commentContent = commentContent;
     }

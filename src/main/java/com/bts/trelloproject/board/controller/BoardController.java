@@ -6,15 +6,18 @@ import com.bts.trelloproject.board.service.BoardService;
 import com.bts.trelloproject.global.common.CustomResponseEntity;
 import com.bts.trelloproject.global.common.StatusEnum;
 import com.bts.trelloproject.global.security.userdetails.UserDetailsImpl;
-import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.concurrent.RejectedExecutionException;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/boards")
@@ -22,8 +25,6 @@ import java.util.concurrent.RejectedExecutionException;
 public class BoardController {
 
     private final BoardService boardService;
-
-
 
     //보드 생성
     @PostMapping
@@ -37,7 +38,6 @@ public class BoardController {
     public BoardResponseDto getboard(@PathVariable Long boardId) {
         BoardResponseDto boardResponseDto = boardService.getBoard(boardId);
         return boardResponseDto;
-
     }
 
     //보드 전체 조회

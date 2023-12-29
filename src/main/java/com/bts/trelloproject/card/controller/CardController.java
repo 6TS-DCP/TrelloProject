@@ -3,6 +3,7 @@ package com.bts.trelloproject.card.controller;
 import com.bts.trelloproject.card.Service.CardService;
 import com.bts.trelloproject.card.dto.CardRequestDto;
 import com.bts.trelloproject.card.dto.CardResponseDto;
+import com.bts.trelloproject.card.dto.CardSchedulerDto;
 import com.bts.trelloproject.card.dto.CardSeqRequestDto;
 import com.bts.trelloproject.card.dto.CardUpdateRequestDto;
 import com.bts.trelloproject.global.common.CustomResponseEntity;
@@ -21,14 +22,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/api/columns/{columnId}")
+@RequestMapping("/api")
 @RestController
 @RequiredArgsConstructor
 public class CardController {
 
     private final CardService cardService;
 
-    @PostMapping("/cards") // 카드 생성
+    @PostMapping("/columns/{columnId}/cards") // 카드 생성
     public ResponseEntity<CustomResponseEntity> createCard(@PathVariable Long columnId,
             @RequestBody CardRequestDto cardRequestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -39,7 +40,7 @@ public class CardController {
 
     @GetMapping("/cards") // 카드 전체조회
     public List<CardResponseDto> getCard(@AuthenticationPrincipal UserDetailsImpl userDetails,
-            @PathVariable String columnId) {
+            @PathVariable Long columnId) {
 
         return cardService.getCard(userDetails.getUser());
     }
@@ -51,21 +52,21 @@ public class CardController {
         return cardService.getCard(userDetails.getUser(), columnId, cardId);
     }
 
-    @GetMapping("/myCards") // 내 카드 전체조회
+    @GetMapping("/columns/{columnId}/myCards") // 내 카드 전체조회
     public List<CardResponseDto> getMyCard(@AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long columnId) {
 
         return cardService.getMyCard(userDetails.getUser(),columnId);
     }
 
-    @GetMapping("/myCards/{cardId}") // 내 카드 단건조회
+    @GetMapping("/columns/{columnId}/myCards/{cardId}") // 내 카드 단건조회
     public CardResponseDto getMyCard(@PathVariable Long cardId, @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long columnId) {
 
         return cardService.getMyCard(userDetails.getUser(),columnId, cardId);
     }
 
-    @PatchMapping("/cards/{id}") // 카드 수정
+    @PatchMapping("/columns/{columnId}/cards/{id}") // 카드 수정
     public ResponseEntity<CustomResponseEntity> updateCard(@PathVariable Long columnId, @PathVariable Long id,
             @RequestBody CardUpdateRequestDto cardRequestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -74,7 +75,7 @@ public class CardController {
         return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_UPDATE_CARD);
     }
 
-    @DeleteMapping("/cards/{id}") // 카드 삭제
+    @DeleteMapping("/columns/{columnId}/cards/{id}") // 카드 삭제
     public ResponseEntity<CustomResponseEntity> deleteCard(@PathVariable Long columnId,
             @AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
 
@@ -82,13 +83,21 @@ public class CardController {
         return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_DELETE_CARD);
     }
 
-    @PatchMapping("/cardseq/{id}") // 카드 순서 변경
+    @PatchMapping("/columns/{columnId}/cardseq/{id}") // 카드 순서 변경
     public ResponseEntity<CustomResponseEntity> sequenceChangeColumn(@PathVariable Long id,
             @RequestBody CardSeqRequestDto cardSeqRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long columnId) {
 
         cardService.sequenceChangeCard(id, columnId, cardSeqRequestDto, userDetails.getUser());
         return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_CHANGE_CARD);
+    }
+
+    @PatchMapping("/{cardId}") // 카드 마감일 변경
+    public ResponseEntity<CustomResponseEntity> changeSchedule(@AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestBody CardSchedulerDto cardSchedulerDto, @PathVariable Long cardId) {
+
+        cardService.changeSchedule(cardId, cardSchedulerDto, userDetails.getUser());
+        return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_CHANGE_DEADLINE);
     }
 
 }
