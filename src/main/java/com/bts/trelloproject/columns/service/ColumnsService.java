@@ -40,6 +40,7 @@ public class ColumnsService {
     public ColumnsResponseDto myGetColumn(Long id, User user) {
         userRepository.findById(user.getUserId()).orElseThrow(() ->
                 new CustomException(StatusEnum.UsernameNotFoundException));
+
         checkMyColumn(id, user);
 
         Columns columns = columnsRepository.findById(id).orElseThrow(
@@ -114,6 +115,10 @@ public class ColumnsService {
         if(checkSeq.isPresent()) {
             throw new CustomException(StatusEnum.DUPLICATED_COLUMN_SEQ);
         }
+    }
+
+    public Columns findById(Long columnId) {
+        return columnsRepository.findById(columnId).orElseThrow(() -> new CustomException(StatusEnum.COLUMN_NOT_FOUND));
     }
 
 

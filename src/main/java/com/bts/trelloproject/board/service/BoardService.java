@@ -4,6 +4,7 @@ import com.bts.trelloproject.board.dto.BoardRequestDto;
 import com.bts.trelloproject.board.dto.BoardResponseDto;
 import com.bts.trelloproject.board.entity.Boards;
 import com.bts.trelloproject.board.repository.BoardRepository;
+import com.bts.trelloproject.card.entity.Card;
 import com.bts.trelloproject.global.common.StatusEnum;
 import com.bts.trelloproject.global.exception.CustomException;
 import com.bts.trelloproject.user.entity.User;
@@ -79,6 +80,10 @@ public class BoardService {
             throw new IllegalArgumentException("작성자만 보드를 수정/삭제 할 수 있습니다.");
         }
         return boards;
+    }
+
+    public Boards findById(Long boardId) {
+        return boardRepository.findById(boardId).orElseThrow(() -> new CustomException(StatusEnum.BOARD_NOT_FOUND));
     }
 
 }
