@@ -12,15 +12,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "users")
 public class User extends BaseLastModifiedTimeEntity {
@@ -32,17 +29,20 @@ public class User extends BaseLastModifiedTimeEntity {
     @Column(nullable = false, length = 20)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password;
 
     @Column(nullable = true, length = 10)
-    private String Introduce;
+    private String introduce;
 
     @Column(nullable = true)
     private String email;
 
     @Column(nullable = true)
     private String profileImageUrl;
+
+    @Column(nullable = true)
+    private String oauthId;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -52,8 +52,30 @@ public class User extends BaseLastModifiedTimeEntity {
     @Enumerated(EnumType.STRING)
     private UserRoleEnum role;
 
+    @Builder
+    private User(
+            Long userId,
+            String username,
+            String password,
+            String email,
+            String introduce,
+            String profileImageUrl,
+            String oauthId,
+            UserRoleEnum userRoleEnum,
+            Provider provider) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.introduce = introduce;
+        this.profileImageUrl = profileImageUrl;
+        this.oauthId = oauthId;
+        this.role = userRoleEnum;
+        this.provider = provider;
+    }
+
     public void updateProfile(String Introduce) {
-        this.Introduce = Introduce;
+        this.introduce = Introduce;
     }
 
     public void changePassword(String newPassword) {
