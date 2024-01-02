@@ -44,7 +44,7 @@ public class Boards extends BaseCreatedTimeEntity {
     private String color;
 
     @ManyToOne
-    @JoinColumn (name = "user_name")
+    @JoinColumn (name = "user_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private User user;
 

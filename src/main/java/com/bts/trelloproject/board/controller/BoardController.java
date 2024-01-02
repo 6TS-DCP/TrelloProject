@@ -28,7 +28,7 @@ public class BoardController {
 
     //보드 생성
     @PostMapping
-    public ResponseEntity<CustomResponseEntity> boardBoard(@RequestBody BoardRequestDto boardrequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseEntity<CustomResponseEntity> createBoard(@RequestBody BoardRequestDto boardrequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         BoardResponseDto responseDto = boardService.createBoard(boardrequestDto, userDetails.getUser());
         return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_CREATE_BOARD);
     }
