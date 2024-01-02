@@ -45,6 +45,7 @@ public enum StatusEnum {
     SUCCESS_DELETE_BOARD(HttpStatus.OK, "SUCCESS_DELETE_BOARD", "보드가 삭제되었습니다."),
     BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, "BOARD_NOT_FOUND", "보드가 존재하지 않습니다."),
     BOARD_NOT_MATCHED(HttpStatus.UNAUTHORIZED, "BOARD_NOT_MATCHED", "보드를 작성한 사용자가 아닙니다."),
+    SUCCESS_INVITE_USER(HttpStatus.CREATED, "SUCCESS_INVITE_USER", "보드에 유저를 초대하였습니다."),
 
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "POST_NOT_FOUND", "게시글이 존재하지 않습니다."),
     COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "COMMENT_NOT_FOUND", "댓글이 존재하지 않습니다."),

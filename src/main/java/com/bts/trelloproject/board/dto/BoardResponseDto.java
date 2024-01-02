@@ -3,6 +3,7 @@ package com.bts.trelloproject.board.dto;
 import com.bts.trelloproject.board.entity.Boards;
 import com.bts.trelloproject.columns.dto.ColumnsResponseDto;
 import com.bts.trelloproject.columns.entity.Columns;
+import com.bts.trelloproject.user.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 

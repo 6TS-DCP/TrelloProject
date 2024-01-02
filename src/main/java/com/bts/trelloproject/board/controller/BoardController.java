@@ -29,7 +29,7 @@ public class BoardController {
     //보드 생성
     @PostMapping
     public ResponseEntity<CustomResponseEntity> boardBoard(@RequestBody BoardRequestDto boardrequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        BoardResponseDto responseDto = boardService.createBoard(boardrequestDto, userDetails.getUsername());
+        BoardResponseDto responseDto = boardService.createBoard(boardrequestDto, userDetails.getUser());
         return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_CREATE_BOARD);
     }
 
@@ -51,15 +51,15 @@ public class BoardController {
     @PutMapping("/{boardId}")
     public ResponseEntity<CustomResponseEntity> updateboard(@PathVariable Long boardId,
                                                         @RequestBody BoardRequestDto boardRequestDto,
-                                                        @AuthenticationPrincipal UserDetailsImpl userDetails){
-            BoardResponseDto responseDto = boardService.updateBoard(boardId,boardRequestDto,userDetails.getUsername());
-            return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_UPDATE_BOARD);
+                                                        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        BoardResponseDto responseDto = boardService.updateBoard(boardId, boardRequestDto, userDetails.getUser());
+        return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_UPDATE_BOARD);
     }
 
     //게시글 삭제
     @DeleteMapping("/{boardId}")
     public ResponseEntity<CustomResponseEntity> deleteboard(@PathVariable Long boardId,  @AuthenticationPrincipal UserDetailsImpl userDetails){
-            boardService.deleteBoard(boardId, userDetails.getUsername());
+            boardService.deleteBoard(boardId, userDetails.getUser());
             return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_DELETE_BOARD);
     }
 }
