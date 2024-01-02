@@ -25,12 +25,17 @@ import org.springframework.util.StringUtils;
 public class JwtUtil {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
+    public static final String ACCESS_TOKEN_HEADER = "AccessToken";
+    public static final String REFRESH_TOKEN_HEADER = "RefreshToken";
+
 
     public static final String AUTHORIZATION_KEY = "auth";
 
     public static final String BEARER_PREFIX = "Bearer ";
     //테스트용 4시간
     private final long TOKEN_TIME = 240 * 60 * 1000L;
+    private final long REFRESH_TOKEN_TIME = 240 * 60 * 1000L;
+
 
     @Value("${jwt.secret.key}")
     private String secretKey;
@@ -55,6 +60,17 @@ public class JwtUtil {
                         .setIssuedAt(date)
                         .signWith(key, signatureAlgorithm)
                         .compact();
+    }
+
+    public String createRefreshToken() {
+        Date now = new Date();
+
+        return BEARER_PREFIX
+                + Jwts.builder()
+                .setExpiration(new Date(now.getTime() + REFRESH_TOKEN_TIME)) // 만료 시간
+                .setIssuedAt(now) // 발급일
+                .signWith(key, SignatureAlgorithm.HS256) // 암호화 알고리즘 (HS256)
+                .compact();
     }
 
     // HttpServletRequest 에서 JWT 가져오기

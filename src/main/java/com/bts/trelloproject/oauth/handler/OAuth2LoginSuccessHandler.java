@@ -46,12 +46,13 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 //        String role = list.get(0).getAuthority();
 
         String accessToken = jwtUtil.createToken(username, true);
+        String refreshToken = jwtUtil.createRefreshToken();
 
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, accessToken);
-//        response.addHeader(JwtUtil.REFRESH_TOKEN_HEADER, refreshToken);
+        response.addHeader(JwtUtil.ACCESS_TOKEN_HEADER, accessToken);
+        response.addHeader(JwtUtil.REFRESH_TOKEN_HEADER, refreshToken);
 
-        response.addCookie(setCookie(accessToken, JwtUtil.AUTHORIZATION_HEADER));
-//        response.addCookie(setCookie(refreshToken, JwtUtil.REFRESH_TOKEN_HEADER));
+        response.addCookie(setCookie(accessToken, JwtUtil.ACCESS_TOKEN_HEADER));
+        response.addCookie(setCookie(refreshToken, JwtUtil.REFRESH_TOKEN_HEADER));
 
 
         return new OAuth2ResponseDTO();
