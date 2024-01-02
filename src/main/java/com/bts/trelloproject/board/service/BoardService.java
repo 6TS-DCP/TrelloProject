@@ -8,12 +8,13 @@ import com.bts.trelloproject.global.common.StatusEnum;
 import com.bts.trelloproject.global.exception.CustomException;
 import com.bts.trelloproject.user.entity.User;
 import com.bts.trelloproject.user.repository.UserRepository;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,19 +23,21 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
 
-    public BoardResponseDto createBoard(BoardRequestDto dto, String username) {
-        User user = userRepository.findByUsername(username).orElseThrow();
-        Boards boards = new Boards(dto, user);
+    public BoardResponseDto createBoard(BoardRequestDto dto, User user) {
+        User user1 = userRepository.findByUsername(user.getUsername()).orElseThrow();
+        Boards boards = new Boards(dto, user1);
 
         boardRepository.save(boards);
         return new BoardResponseDto(boards);
     }
+
 
     public BoardResponseDto getBoard(Long boardId) {
         Boards boards = boardRepository.findById(boardId).orElseThrow(
                 () -> new CustomException(StatusEnum.BOARD_NOT_FOUND));
         return new BoardResponseDto(boards);
     }
+
 
     public List<BoardResponseDto> getAllBoard() {
         List<BoardResponseDto> boardResponseDtoList = new ArrayList<>();
@@ -50,8 +53,8 @@ public class BoardService {
 
     //게시글 수정
     @Transactional
-    public BoardResponseDto updateBoard(Long boardId, BoardRequestDto dto, String username) {
-        Boards boards = checkLoginUserAndBoardUser(boardId, username);
+    public BoardResponseDto updateBoard(Long boardId, BoardRequestDto dto, User user) {
+        Boards boards = checkLoginUserAndBoardUser(boardId, user.getUsername());
         boards.updateBoard(dto);
 
         boardRepository.save(boards);
@@ -60,8 +63,8 @@ public class BoardService {
 
 
     //게시글 삭제
-    public void deleteBoard(Long boardId, String username) {
-        Boards boards = checkLoginUserAndBoardUser(boardId, username);
+    public void deleteBoard(Long boardId, User user) {
+        Boards boards = checkLoginUserAndBoardUser(boardId, user.getUsername());
         //delete
         boardRepository.deleteById(boardId);
         return;

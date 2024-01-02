@@ -1,20 +1,18 @@
 package com.bts.trelloproject.user.entity;
 
+import com.bts.trelloproject.board.entity.Boards;
 import com.bts.trelloproject.global.common.BaseLastModifiedTimeEntity;
 import com.bts.trelloproject.user.constant.Provider;
 import com.bts.trelloproject.user.constant.UserRoleEnum;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -81,4 +79,5 @@ public class User extends BaseLastModifiedTimeEntity {
     public void changePassword(String newPassword) {
         this.password = newPassword;
     }
+
 }

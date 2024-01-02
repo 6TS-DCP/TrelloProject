@@ -3,7 +3,9 @@ package com.bts.trelloproject.board.entity;
 import com.bts.trelloproject.board.dto.BoardRequestDto;
 import com.bts.trelloproject.columns.entity.Columns;
 import com.bts.trelloproject.global.common.BaseCreatedTimeEntity;
+import com.bts.trelloproject.inviteuser.entity.InviteUser;
 import com.bts.trelloproject.user.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,11 +22,13 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+
 @Entity
 @Getter
 @NoArgsConstructor
 @Table(name = "boards")
 public class Boards extends BaseCreatedTimeEntity {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,14 +44,19 @@ public class Boards extends BaseCreatedTimeEntity {
     private String color;
 
     @ManyToOne
-    @JoinColumn(name = "user_name")
+    @JoinColumn (name = "user_name")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private User user;
 
-    @OneToMany(mappedBy = "boards", orphanRemoval = true)
+    @OneToMany(mappedBy = "boards")
+    @JsonIgnore
     private List<Columns> columnsList = new ArrayList<>();
 
-    public Boards(BoardRequestDto dto, User user) {
+    @OneToMany(mappedBy = "boards")
+    @JsonIgnore
+    private List<InviteUser> inviteList = new ArrayList<>();
+
+    public Boards(BoardRequestDto dto, User user){
         this.user = user;
         this.title = dto.getTitle();
         this.content = dto.getContent();
@@ -60,4 +69,7 @@ public class Boards extends BaseCreatedTimeEntity {
         this.color = dto.getColor();
     }
 
+    public void updateInviteUser(InviteUser inviteUser){
+        this.inviteList.add(inviteUser);
+    }
 }
