@@ -81,6 +81,9 @@ public enum StatusEnum {
     SUCCESS_COMMENT_CREATE(HttpStatus.OK, "SUCCESS_COMMENT_CREATE", "댓글이 등록되었습니다."),
     SUCCESS_COMMENT_UPDATE(HttpStatus.OK, "SUCCESS_COMMENT_UPDATE", "댓글이 수정되었습니다."),
     SUCCESS_COMMENT_DELETE(HttpStatus.OK, "SUCCESS_DELETE_POST", "댓글이 삭제되었습니다."),
+
+    // OAuth2
+    SUCCESS(HttpStatus.OK,"SUCCESS","성공"),
     ;
 
     private final HttpStatus httpStatus;
