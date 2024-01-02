@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
 
-    List<Card> findAllByUser(User dbuser);
+    List<Card> findAllByUser_UserId(Long user_userId);
 
     Optional<Card> findByCardSeqAndUser(int columnSeq, User user);
 

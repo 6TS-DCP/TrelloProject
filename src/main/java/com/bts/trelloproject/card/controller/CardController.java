@@ -38,28 +38,27 @@ public class CardController {
         return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_CREATE_CARD);
     }
 
-    @GetMapping("/cards") // 카드 전체조회
-    public List<CardResponseDto> getCard(@AuthenticationPrincipal UserDetailsImpl userDetails,
-            @PathVariable Long columnId) {
+    @GetMapping("/cards") // 내가 작성한 모든 카드 전체조회
+    public List<CardResponseDto> getCard(@AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         return cardService.getCard(userDetails.getUser());
     }
 
-    @GetMapping("/cards/{cardId}") // 카드 단건조회
+    @GetMapping("/columns/{columnId}/cards/{cardId}") // 카드 단건조회
     public CardResponseDto getCard(@AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long columnId, @PathVariable Long cardId) {
 
         return cardService.getCard(userDetails.getUser(), columnId, cardId);
     }
 
-    @GetMapping("/columns/{columnId}/myCards") // 내 카드 전체조회
+    @GetMapping("/columns/{columnId}/myCards") // 칼럼에 따른 내 카드 전체조회
     public List<CardResponseDto> getMyCard(@AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long columnId) {
 
         return cardService.getMyCard(userDetails.getUser(),columnId);
     }
 
-    @GetMapping("/columns/{columnId}/myCards/{cardId}") // 내 카드 단건조회
+    @GetMapping("/columns/{columnId}/myCards/{cardId}") // 칼럼에 따른 내 카드 단건조회
     public CardResponseDto getMyCard(@PathVariable Long cardId, @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long columnId) {
 
@@ -83,12 +82,12 @@ public class CardController {
         return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_DELETE_CARD);
     }
 
-    @PatchMapping("/columns/{columnId}/cardseq/{id}") // 카드 순서 변경
-    public ResponseEntity<CustomResponseEntity> sequenceChangeColumn(@PathVariable Long id,
+    @PatchMapping("/columns/{columnId}/cardseq/{cardId}") // 카드 순서 변경
+    public ResponseEntity<CustomResponseEntity> sequenceChangeColumn(@PathVariable Long cardId,
             @RequestBody CardSeqRequestDto cardSeqRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long columnId) {
 
-        cardService.sequenceChangeCard(id, columnId, cardSeqRequestDto, userDetails.getUser());
+        cardService.sequenceChangeCard(cardId, columnId, cardSeqRequestDto, userDetails.getUser());
         return CustomResponseEntity.toResponseEntity(StatusEnum.SUCCESS_CHANGE_CARD);
     }
 

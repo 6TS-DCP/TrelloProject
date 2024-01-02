@@ -42,7 +42,7 @@ public class CardService {
 
         User dbuser = userService.findById(user.getUserId());
 
-        return cardRepository.findAllByUser(dbuser).stream().map(CardResponseDto::new).toList();
+        return cardRepository.findAllByUser_UserId(dbuser.getUserId()).stream().map(CardResponseDto::new).toList();
     }
 
     public CardResponseDto getCard(User user, Long columnId, Long cardId) {
@@ -68,7 +68,7 @@ public class CardService {
         User dbuser = userService.findById(user.getUserId());
         Columns columns = columnsService.findById(columnId);
 
-        return cardRepository.findAllByUser(dbuser).stream().map(CardResponseDto::new).toList();
+        return cardRepository.findAllByUser_UserId(dbuser.getUserId()).stream().map(CardResponseDto::new).toList();
     }
 
     public CardResponseDto getMyCard(User user, Long columnId, Long cardId) {
