@@ -17,10 +17,10 @@ public record SignupDTO(
         return User.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password))
-                .Introduce(BASIC_PROFILE_INTRODUCTION)
+                .introduce(BASIC_PROFILE_INTRODUCTION)
                 .email(BASIC_PROFILE_EMAIL)
                 .provider(Provider.LOCAL)
-                .role(UserRoleEnum.USER)
+                .userRoleEnum(UserRoleEnum.USER)
                 .build();
     }
 }
